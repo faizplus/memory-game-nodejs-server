@@ -28,6 +28,7 @@ module.exports = {
         a.push({ ...c, isFlipped: false });
         return a;
       }, []);
+
       result.cards = cards;
       return res.status(200).json(result);
     } catch (error) {
@@ -36,13 +37,13 @@ module.exports = {
     }
   },
   selectCard: async ({ body }, res) => {
-    const { gameData } = body;
-    if (!gameData) {
+    const { fileId, cardIndex } = body;
+    if (!fileId) {
       return res.status(400).json({ msg: "Invalid request" });
     }
 
     try {
-      const result = await game.setGameData(gameData);
+      const result = await game.setGameData(fileId, cardIndex);
       return res.status(200).json(result);
     } catch (error) {
       console.log(error);
